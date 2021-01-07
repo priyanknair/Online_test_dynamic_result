@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Online Exam</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function()
+        {
+           $("#but1").click(function()
+           {
+            $(".rb").show();
+            $(".rb").attr("disabled", true);
+           });
+        });
+        function answers()
+        {
+            document.getElementById("UserAnswer").innerHTML="";
+            var e=document.getElementsByTagName('input');
+            for(i=0;i<=e.length;i++)
+            {
+                if(e[i].type=="radio")
+                {
+                    if(e[i].checked)
+                    {
+                        document.getElementById("UserAnswer").innerHTML+="Q"+e[i].name+" The answer you have selected is :"+e[i].value+"<br/>";
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <center>
+        <h1>Online Exam</h1>
+        <hr/>
+    </center>
+    <div style="padding-left: 30px">
+        {% for result in Exam %}
+        <table>
+            <tr>
+                <td>{{result.id}}) {{result.Question}} ?</td>
+            </tr>
+            <tr>
+                <td><input type="radio" id="option1" class="rb" name="{{result.id}}" value="{{result.option1}}">{{result.option1}}</td>
+            </tr>
+            <tr>
+                <td><input type="radio" id="option2" class="rb" name="{{result.id}}" value="{{result.option2}}">{{result.option2}}</td>
+            </tr>
+            <tr>
+                <td><input type="radio" id="option3" class="rb" name="{{result.id}}" value="{{result.option3}}">{{result.option3}}</td>
+            </tr>
+            <tr>
+                <td><input type="radio" id="option4" class="rb" name="{{result.id}}" value="{{result.option4}}">{{result.option4}}</td>
+            </tr>
+            <tr>
+            <td><label id="answer" class="rb" style="display: none; color: green;"><b>The Correct Answer is: {{result.answer}}</b></label></td>
+            </tr>
+        </table>
+        <hr/>
+        {% endfor %}
+        <input type="submit" value="Click for Result" id="but1" onclick="answers();" />
+        <br/>
+        <b id = "UserAnswer"></b>
+    </div>
+</body>
+</html>
